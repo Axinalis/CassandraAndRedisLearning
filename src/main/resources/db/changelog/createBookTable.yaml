@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - logicalFilePath: db.changelog-master.yaml
+  - changeSet:
+      id: 2
+      author: maybeAxinalis
+      labels: "CreateBookTable"
+      comment: "Create table for books"
+      changes:
+        - createTable:
+            tableName: book
+            columns:
+              - column:
+                  name: book_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
