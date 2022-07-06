@@ -55,7 +55,7 @@
 			<artifactId>CassandraJDBC</artifactId>
 			<version>4.2</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/libs/liquibase-cassandra-4.12.0.jar</systemPath>
+			<systemPath>${basedir}/libs/CassandraJDBC42.jar</systemPath>
 		</dependency>
 	</dependencies>
 
