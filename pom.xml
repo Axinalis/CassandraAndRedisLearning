@@ -50,6 +50,13 @@
 			<artifactId>liquibase-core</artifactId>
 			<version>4.11.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.datastax.jdbc</groupId>
+			<artifactId>CassandraJDBC</artifactId>
+			<version>4.2</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/libs/liquibase-cassandra-4.12.0.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
