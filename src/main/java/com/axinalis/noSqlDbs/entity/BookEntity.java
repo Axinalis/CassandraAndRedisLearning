@@ -1,14 +1,14 @@
 package com.axinalis.noSqlDbs.entity;
 
-import javax.persistence.*;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
+
 import java.util.Objects;
 
-@Entity
-@Table(name = "Book")
+@Table
 public class BookEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PrimaryKey
     private Long bookId;
     private String title;
     private String author;

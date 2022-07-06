@@ -1,17 +1,17 @@
 package com.axinalis.noSqlDbs.entity;
 
 import com.axinalis.noSqlDbs.repository.UserBooksConverter;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-import javax.persistence.*;
+import javax.persistence.Convert;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "Client")
+@Table
 public class ClientEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PrimaryKey
     private Long clientId;
     private String name;
     private int age;

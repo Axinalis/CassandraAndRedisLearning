@@ -7,7 +7,6 @@ databaseChangeLog:
       comment: "Create table for users"
       changes:
         - createTable:
-            tableName: client
             columns:
               - column:
                   name: client_id
@@ -16,18 +15,22 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
+                    tableName: user
               - column:
                   name: name
                   type: varchar(50)
                   constraints:
                     nullable: false
+                    tableName: user
               - column:
                   name: age
                   type: INT
                   constraints:
                     nullable: false
+                    tableName: user
               - column:
                   name: read_books
                   type: varchar(100)
                   constraints:
                     nullable: false
+                    tableName: user
