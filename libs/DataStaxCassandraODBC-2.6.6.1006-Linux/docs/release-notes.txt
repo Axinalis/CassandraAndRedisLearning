@@ -1,0 +1,279 @@
+============================================================================== 
+DataStax Cassandra ODBC Data Connector Release Notes 
+============================================================================== 
+
+The release notes provide details of enhancements, features, known issues, 
+and workflow changes in DataStax Cassandra ODBC Connector 2.6.6, as well as 
+the version history.
+
+
+2.6.6 ======================================================================== 
+
+Released 2021-03-26
+
+Enhancements & New Features 
+
+ * [CASSO-803] Updated Cassandra CPP
+
+   The connector now uses Cassandra CPP 2.16.0. Previously, the connector used 
+   Cassandra CPP 2.15.3.
+
+
+Known Issues
+The following are known issues that you may encounter due to limitations in 
+the data source, the connector, or an application.
+
+ * INSERT statement fails when inserting multiple rows and binding the 
+   DEFAULT value in the first row.
+
+   When inserting multiple rows in a single SQL statement and binding the 
+   DEFAULT value in the first row, the INSERT statement fails. As a 
+   workaround, use NULL instead of DEFAULT.
+
+ * Non-key virtual table columns are not nullable.
+
+   Cassandra does not support null values in collections. The connector reports 
+   non-key columns in virtual tables as not nullable.
+
+ * On Cassandra 2.1.x, the connector returns incorrect values for VARINT 
+   (SQL_NUMERIC) columns.
+
+   This is due to a limitation in the DataStax cpp-driver. For more 
+   information, see the following link:
+   https://DataStax-oss.atlassian.net/browse/CPP-419
+
+ * If a user-defined type is the primary key of a table, none of the primary 
+   key's fields can be null when it is used in an INSERT statement.
+
+ * A column name collision occurs if a map contains two user-defined types 
+   with identical field names, that is, if the map's key and value are the 
+   same user-defined type.
+   
+ * [CASSO-752] Attempting to perform INSERT or UPDATE queries on tables with
+   columns of type TUPLE or UDT (when ReturnUdtAsString is enabled) results in
+   the connector returning an error.    
+
+
+Workflow Changes =============================================================
+
+The following changes may disrupt workflows from earlier versions.
+
+In addition to changes that are already implemented in the current version of 
+the connector, this section describes potentially disruptive changes that will 
+be implemented in a future version of the connector, so that you can plan 
+accordingly.
+
+
+Upcoming ---------------------------------------------------------------------
+
+ * [CASSO-644] Removing support for earlier versions of Windows
+
+   As early as November 2020, the connector will no longer support following 
+   versions of Windows:
+   - Windows 7
+   - Windows Server 2008
+   - Windows Server 2008r2
+
+   For a list of supported Windows versions, see the Installation and 
+   Configuration Guide.
+
+ * [CASSO-644] Removing support for CentOS 6
+
+   As early as November 2020, the connector will no longer support CentOS 6.
+
+   For a list of supported Linux versions, see the Installation and 
+   Configuration Guide.
+
+
+2.6.6 ------------------------------------------------------------------------
+
+ * Support for Visual Studio 2013 removed
+
+   Beginning with this release, the connector no longer supports Visual Studio 
+   2013. For a list of supported Visual Studio versions, see the Installation 
+   and Configuration Guide.
+
+
+2.6.0 ------------------------------------------------------------------------
+
+ * Support for Apache Cassandra 2.0 removed
+
+   Beginning with this release, the connector no longer supports Apache 
+   Cassandra 2.0. The connector now supports Apache Cassandra 2.1, 2.2, and 
+   3.0.
+
+
+Version History ==============================================================
+
+2.6.5 ------------------------------------------------------------------------ 
+
+Released 2020-10-30
+
+Enhancements & New Features 
+
+ * [CASSO-761] Support for solr_query
+
+   The driver now supports solr_query in SQL mode. 
+   
+ * [CASSO-766] Updated OpenSSL support
+
+   The driver now uses OpenSSL 1.1.1g for encryption of data. Previously, the
+   driver used OpenSSL 1.1.1d.
+   
+
+Resolved Issues
+The following issues have been resolved in Simba Cassandra ODBC Driver 2.6.5.
+
+ * [CASSO-732][CASSO-771] When the query mode is CQL, or when the query mode 
+   is SQL With CQL Fallback and the query falls back to CQL mode, the driver
+   returns an error. 
+   
+
+2.6.4 ------------------------------------------------------------------------
+
+Released 2020-09-02
+
+Enhancements & New Features 
+
+ * [CASSO-665] Notarization for macOS
+
+   The driver now supports notarization on macOS systems, enabling it to be
+   run on macOS versions 10.14.6 and later.
+
+ * [CASSO-721][CASSO-739][CASSO-751] Updated third-party libraries
+
+   The driver now uses the following third-party libraries:
+   - Boost 1.64.0 (previously 1.57.0)
+   - Cassandra CPP 2.15.3 (previously 2.14.0)
+   - libuv 1.38.1 (previously 1.33.1)
+   
+ * [CASSO-729] UDT handling
+
+   You can configure how the driver handles UDT columns. To do this, set the
+   ReturnUdtAsString property to 1. For more information, see the Installation 
+   and Configuration Guide.
+   
+ * [CASSO-730] Compress data internally
+ 
+   You can now compress data internally for the current connection. To do 
+   this, set the EnableCompressSwapFile property to 1. For more information,
+   see the Installation and Configuration Guide.   
+   
+
+2.6.2 ------------------------------------------------------------------------ 
+
+Released 2020-04-17
+
+Enhancements & New Features 
+
+ * [CASSO-666] Support for code signing
+ 
+   The driver now supports code signing on Windows systems.
+
+ * [CASSO-699][CASSO-714] Support for additional operating systems
+
+   The driver now supports the following operating systems:  
+   - Windows Server 2019
+
+
+Resolved Issues
+The following issues have been resolved in DataStax Cassandra ODBC Driver 
+2.6.2.
+
+ * [CASSO-646] When attempting to perform a test connection without a DID file
+   present in the DLL folder, the driver terminates unexpectedly.
+
+ * [CASSO-664] The driver terminates unexpectedly when both of the following 
+   occur:
+   - Multiple database drivers are loaded to the same process.
+   - One driver unloads and calls ICU's u_cleanup() function, while another 
+     driver continues to run and attempts to access the memory space that has 
+     been cleaned up.   
+
+ * [CASSO-680]  When attempting to read an empty value in the column of type
+   INET, the driver returns an error.
+
+ * [CASSO-707][CASSO-710] When attempting to delete a row where the column of
+   type DATE is in the PRIMARY KEY (PARTITION or CLUSTERING KEY) and the value
+   is of the form '2000-01-01 00:00:00.000000000', the driver returns an 
+   error. 
+   
+
+2.6.1 ------------------------------------------------------------------------
+
+Released 2019-12-31
+
+Enhancements & New Features 
+
+ * [CASSO-637] Support for DataStax Astra
+
+   You can now use the driver to connect to Cassandra databases that are 
+   hosted on the cloud as DataStax Astra databases. For information about 
+   how to configure a connection to Astra, see the Installation and 
+   Configuration Guide.
+
+   For more information about Astra, refer to the product page on the 
+   DataStax website: https://www.datastax.com/cloud/datastax-astra.
+
+ * [CASSO-619] Support for certain frozen UDT types
+
+   The driver now supports the use of frozen user-defined types that contain 
+   the following Cassandra-native types:
+   - DATE
+   - TIME
+   - SMALLINT
+   - TINYINT
+
+ * [CASSO-631][CASSO-632][CASSO-635][CASSO-640] Updated third-party libraries
+
+   The driver now uses the following third-party libraries:
+   - DataStax C/C++ Driver for Apache Cassandra 2.14.0 (previously 2.12.0)
+   - Expat 2.2.9 (previously 2.2.0)
+   - libuv 1.33.1 (previously 1.28.0)
+   - OpenSSL 1.1.1d (previously 1.1.0j)
+   - zlib 1.2.11 (not previously used)
+
+
+Resolved Issues
+The following issue has been resolved in DataStax Cassandra ODBC Driver 
+2.6.1.
+
+ * [CASSO-618] In some situations, retrieving data of Cassandra type BLOB 
+   and converting it to a string might cause the client application to 
+   unexpectedly terminate.
+
+
+2.6.0 ------------------------------------------------------------------------ 
+
+Released 2019-08-31
+
+Enhancements & New Features 
+
+ * [CASSO-523][CASSO-554][CASSO-556][CASSO-562] Updated third-party libraries
+
+   The driver now uses the following third-party libraries:
+   - DataStax C/C++ Driver for Apache Cassandra 2.12.0 
+   - Expat 2.2.0
+   - ICU 58.2.x
+   - libuv 1.28.0
+   - OpenSSL 1.1.0
+
+
+Resolved Issues
+The following issues have been resolved in DataStax Cassandra ODBC Driver 
+2.6.0.
+
+ * [CASSO-544] When EnableJoins is set to 0, the driver can still perform 
+   joins on two tables that are associated to the same source table.
+
+ * [CASSO-531] In some cases, the driver terminates unexpectedly.
+
+
+==============================================================================
+Contact Us
+==============================================================================
+
+If you have difficulty using the driver, please contact our Support staff.  
+
+For information about contacting Support, go to:
+http://www.DataStax.com/what-we-offer/products-services/support
