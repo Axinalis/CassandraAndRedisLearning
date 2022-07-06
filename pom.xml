@@ -37,8 +37,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
+			<groupId>org.apache.cassandra</groupId>
+			<artifactId>cassandra-all</artifactId>
+			<version>4.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.liquibase</groupId>
