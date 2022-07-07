@@ -21,41 +21,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-cassandra</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-cassandra</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.datastax.oss</groupId>
-			<artifactId>java-driver-core</artifactId>
-			<version>4.14.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-			<version>4.11.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.datastax.jdbc</groupId>
-			<artifactId>CassandraJDBC</artifactId>
-			<version>4.2</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/libs/CassandraJDBC42.jar</systemPath>
 		</dependency>
 	</dependencies>
 
@@ -69,31 +43,14 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
 			</plugin>
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>4.7.1</version>
-				<configuration>
-					<changeLogFile>db/changelog/db.changelog-master.yaml</changeLogFile>
-					<url>jdbc:postgresql://db:5432/library</url>
-					<username>postgres</username>
-					<password>password</password>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.liquibase.ext</groupId>
-						<artifactId>liquibase-postgresql</artifactId>
-						<version>4.7.1</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
 						<id>copy-dependencies</id>
-						<phase>prepare-package</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>copy-dependencies</goal>
 						</goals>
@@ -110,13 +67,14 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<classpathPrefix>libs/</classpathPrefix>
+							<classpathPrefix>lib/</classpathPrefix>
 							<mainClass>
 								com.axinalis.noSqlDbs.LearnApplication
 							</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
+
 			</plugin>
 		</plugins>
 	</build>

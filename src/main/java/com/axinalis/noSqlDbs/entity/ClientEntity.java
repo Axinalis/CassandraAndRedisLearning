@@ -1,10 +1,8 @@
 package com.axinalis.noSqlDbs.entity;
 
-import com.axinalis.noSqlDbs.repository.UserBooksConverter;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import javax.persistence.Convert;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +13,6 @@ public class ClientEntity {
     private Long clientId;
     private String name;
     private int age;
-    @Convert(converter = UserBooksConverter.class)
     private List<Long> readBooks;
 
     public ClientEntity() {
