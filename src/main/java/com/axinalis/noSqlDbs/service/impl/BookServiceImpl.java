@@ -5,6 +5,7 @@ import com.axinalis.noSqlDbs.entity.BookEntity;
 import com.axinalis.noSqlDbs.repository.BookRepository;
 import com.axinalis.noSqlDbs.service.BookService;
 import com.axinalis.noSqlDbs.service.DtoEntityMapper;
+import com.datastax.oss.driver.api.core.uuid.Uuids;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import static com.axinalis.noSqlDbs.service.DtoEntityMapper.mapBookEntityToDto;
 public class BookServiceImpl implements BookService {
 
     private BookRepository bookRepository;
-    private Long counter = 1L;
     private static Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
 
     public BookServiceImpl(@Autowired BookRepository bookRepository) {
@@ -48,7 +48,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book createBook(Book book) {
         BookEntity bookEntity = mapBookDtoToEntity(book);
-        bookEntity.setBookId(counter++);
+        bookEntity.setBookId(Uuids.timeBased().timestamp());
         log.info("Book creating was started. {}", book);
         return mapBookEntityToDto(bookRepository.save(bookEntity));
     }
