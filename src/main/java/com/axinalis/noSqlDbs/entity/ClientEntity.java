@@ -1,5 +1,6 @@
 package com.axinalis.noSqlDbs.entity;
 
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -11,8 +12,11 @@ public class ClientEntity {
 
     @PrimaryKey
     private Long clientId;
+    @Column
     private String name;
+    @Column
     private int age;
+    @Column
     private List<Long> readBooks;
 
     public ClientEntity() {

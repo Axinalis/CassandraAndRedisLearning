@@ -1,5 +1,6 @@
 package com.axinalis.noSqlDbs.entity;
 
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -10,7 +11,9 @@ public class BookEntity {
 
     @PrimaryKey
     private Long bookId;
+    @Column
     private String title;
+    @Column
     private String author;
 
     public BookEntity() {
