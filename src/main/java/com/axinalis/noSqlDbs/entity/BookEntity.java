@@ -61,4 +61,13 @@ public class BookEntity {
     public int hashCode() {
         return Objects.hash(bookId, title, author);
     }
+
+    @Override
+    public String toString() {
+        return "BookEntity{" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                '}';
+    }
 }

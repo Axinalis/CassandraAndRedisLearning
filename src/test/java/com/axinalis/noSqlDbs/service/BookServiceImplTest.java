@@ -51,10 +51,8 @@ public class BookServiceImplTest {
     @Test
     public void testCreatingNewBook(){
         BookEntity bookToCreate = mapBookDtoToEntity(getNewBook());
-        bookToCreate.setBookId(null);
-        BookEntity bookFromRepository = mapBookDtoToEntity(getNewBook());
         Book bookFromController = getNewBook();
-        when(bookRepository.save(bookToCreate)).thenReturn(bookFromRepository);
+        when(bookRepository.save(bookToCreate)).thenReturn(bookToCreate);
 
         assertEquals(bookFromController, bookServiceImpl.createBook(bookFromController));
     }
