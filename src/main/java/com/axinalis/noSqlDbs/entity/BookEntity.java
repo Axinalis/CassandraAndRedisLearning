@@ -5,7 +5,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.util.Objects;
 
-@Table
+@Table("book")
 public class BookEntity {
 
     @PrimaryKey
