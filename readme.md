@@ -1,7 +1,7 @@
 # Library project
 
 A simple project for learning Cassandra and Redis databases.
-It represents library where each user has 
+It represents library where each user has list of read books.
 
 ---
 ### Starting containers
