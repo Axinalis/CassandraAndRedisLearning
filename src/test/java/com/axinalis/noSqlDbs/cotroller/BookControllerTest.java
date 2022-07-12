@@ -5,7 +5,6 @@ import com.axinalis.noSqlDbs.dto.Book;
 import com.axinalis.noSqlDbs.repository.BookRepository;
 import com.axinalis.noSqlDbs.repository.UserRepository;
 import com.axinalis.noSqlDbs.service.BookService;
-import com.axinalis.noSqlDbs.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

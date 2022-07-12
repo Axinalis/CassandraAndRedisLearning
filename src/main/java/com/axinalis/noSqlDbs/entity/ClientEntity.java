@@ -1,29 +1,30 @@
 package com.axinalis.noSqlDbs.entity;
 
-import com.axinalis.noSqlDbs.repository.UserBooksConverter;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "Client")
+@Table("client")
 public class ClientEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PrimaryKey
     private Long clientId;
-    private String name;
+    @Column
+    private String firstName;
+    @Column
     private int age;
-    @Convert(converter = UserBooksConverter.class)
+    @Column
     private List<Long> readBooks;
 
     public ClientEntity() {
     }
 
-    public ClientEntity(Long userId, String name, int age, List<Long> readBooks) {
+    public ClientEntity(Long userId, String firstName, int age, List<Long> readBooks) {
         this.clientId = userId;
-        this.name = name;
+        this.firstName = firstName;
         this.age = age;
         this.readBooks = readBooks;
     }
@@ -36,12 +37,12 @@ public class ClientEntity {
         this.clientId = clientId;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public int getAge() {
@@ -65,19 +66,19 @@ public class ClientEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClientEntity that = (ClientEntity) o;
-        return age == that.age && Objects.equals(clientId, that.clientId) && Objects.equals(name, that.name) && Objects.equals(readBooks, that.readBooks);
+        return age == that.age && Objects.equals(clientId, that.clientId) && Objects.equals(firstName, that.firstName) && Objects.equals(readBooks, that.readBooks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(clientId, name, age, readBooks);
+        return Objects.hash(clientId, firstName, age, readBooks);
     }
 
     @Override
     public String toString() {
         return "UserEntity{" +
                 "id=" + clientId +
-                ", name='" + name + '\'' +
+                ", name='" + firstName + '\'' +
                 ", age=" + age +
                 ", readBooks=" + readBooks +
                 '}';

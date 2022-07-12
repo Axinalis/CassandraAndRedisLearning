@@ -11,7 +11,7 @@ public class DtoEntityMapper {
 
     public static Client mapUserEntityToDto(ClientEntity clientEntity, List<Book> readBooks){
         return new Client(clientEntity.getClientId(),
-                clientEntity.getName(),
+                clientEntity.getFirstName(),
                 clientEntity.getAge(),
                 readBooks);
     }

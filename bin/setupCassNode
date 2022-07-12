@@ -1,0 +1,25 @@
+#!/bin/bash
+
+cd ../
+echo "Starting a container"
+sudo docker-compose up db -d --build
+echo "Waiting a minute for Cassandra node to start"
+sleep 90
+
+echo "Executing scripts:"
+echo "1. Creating keyspace"
+sudo docker exec cassandraandredislearning-db-1 cqlsh -e "CREATE KEYSPACE library WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'datacenter1' : 1 };"
+echo "2. Creating table book"
+sudo docker exec cassandraandredislearning-db-1 cqlsh -e "CREATE TABLE library.book (bookid bigint, title text, author text, PRIMARY KEY (bookid));"
+echo "3. Creating table client"
+sudo docker exec cassandraandredislearning-db-1 cqlsh -e "CREATE TABLE library.client (clientid bigint, firstname text, age int, readbooks list<bigint>, PRIMARY KEY (clientid));"
+
+echo "4. Populating database with data"
+sudo docker exec cassandraandredislearning-db-1 cqlsh -e "INSERT INTO library.book (bookid, title, author) VALUES (138769059893610000, 'Harry Potter', 'Joanne Rowling');"
+sudo docker exec cassandraandredislearning-db-1 cqlsh -e "INSERT INTO library.book (bookid, title, author) VALUES (138769059921670000, '1984', 'George Orwell');"
+sudo docker exec cassandraandredislearning-db-1 cqlsh -e "INSERT INTO library.client (clientid, firstname, age, readbooks) VALUES (138769059908980000, 'Peter', 25, [138769059893610000, 138769059921670000]);"
+
+echo "Cassandra node was started"
+
+echo "Running tests using maven and starting application container"
+mvn clean package && sudo docker-compose up webapp --build

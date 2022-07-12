@@ -5,7 +5,7 @@ import com.axinalis.noSqlDbs.dto.Book;
 import com.axinalis.noSqlDbs.dto.Client;
 import com.axinalis.noSqlDbs.repository.BookRepository;
 import com.axinalis.noSqlDbs.repository.UserRepository;
-import com.axinalis.noSqlDbs.service.UserService;
+import com.axinalis.noSqlDbs.service.ClientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +33,7 @@ public class ClientControllerTest {
     @Autowired
     private ObjectMapper mapper;
     @MockBean
-    private UserService userService;
+    private ClientService clientService;
     @MockBean
     private UserRepository userRepository;
     @MockBean
@@ -41,7 +41,7 @@ public class ClientControllerTest {
 
     @Test
     public void testGettingUsersInfo() throws Exception {
-        when(userService.userList()).thenReturn(Arrays.asList(getNewUser()));
+        when(clientService.userList()).thenReturn(Arrays.asList(getNewUser()));
 
         mockMvc.perform(get("/library/user"))
                 .andExpect(status().isOk())
@@ -57,7 +57,7 @@ public class ClientControllerTest {
 
     @Test
     public void testGettingUserById() throws Exception {
-        when(userService.userById(1)).thenReturn(getNewUser());
+        when(clientService.userById(1)).thenReturn(getNewUser());
 
         mockMvc.perform(get("/library/user/1"))
                 .andExpect(status().isOk())
@@ -76,7 +76,7 @@ public class ClientControllerTest {
         clientToCreate.setId(500L);
         Client createdClient = getNewUser();
 
-        when(userService.createUser(clientToCreate)).thenReturn(createdClient);
+        when(clientService.createUser(clientToCreate)).thenReturn(createdClient);
 
         mockMvc.perform(post("/library/user")
                 .contentType("application/json")
@@ -96,7 +96,7 @@ public class ClientControllerTest {
     public void testUpdatingUser() throws Exception {
         Client updatedClient = getNewUser();
 
-        when(userService.updateUser(1, updatedClient)).thenReturn(updatedClient);
+        when(clientService.updateUser(1, updatedClient)).thenReturn(updatedClient);
 
         mockMvc.perform(put("/library/user/1")
                         .contentType("application/json")
@@ -117,7 +117,7 @@ public class ClientControllerTest {
         mockMvc.perform(delete("/library/user/1"))
                 .andExpect(status().isOk());
 
-        verify(userService, times(1)).deleteUser(1);
+        verify(clientService, times(1)).deleteUser(1);
     }
 
     private Client getNewUser(){

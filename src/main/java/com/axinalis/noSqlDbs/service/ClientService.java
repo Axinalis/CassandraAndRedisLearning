@@ -4,7 +4,7 @@ import com.axinalis.noSqlDbs.dto.Client;
 
 import java.util.List;
 
-public interface UserService {
+public interface ClientService {
 
     List<Client> userList();
     Client userById(long id);

@@ -2,10 +2,11 @@ package com.axinalis.noSqlDbs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
-@SpringBootApplication
-@EnableJpaRepositories("com.axinalis.noSqlDbs.repository")
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
+@EnableCassandraRepositories(basePackages = "com.axinalis.noSqlDbs.repository")
 public class LearnApplication {
 
 	public static void main(String[] args) {

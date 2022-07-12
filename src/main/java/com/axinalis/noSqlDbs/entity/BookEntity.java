@@ -1,16 +1,19 @@
 package com.axinalis.noSqlDbs.entity;
 
-import javax.persistence.*;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
+
 import java.util.Objects;
 
-@Entity
-@Table(name = "Book")
+@Table("book")
 public class BookEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PrimaryKey
     private Long bookId;
+    @Column
     private String title;
+    @Column
     private String author;
 
     public BookEntity() {
@@ -57,5 +60,14 @@ public class BookEntity {
     @Override
     public int hashCode() {
         return Objects.hash(bookId, title, author);
+    }
+
+    @Override
+    public String toString() {
+        return "BookEntity{" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                '}';
     }
 }
