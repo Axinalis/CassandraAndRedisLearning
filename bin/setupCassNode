@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd /home/anton/FastDisk/workspace/LearnPRojects/CassandraAndRedisLearning/
+echo "Starting a container"
+sudo docker-compose up db -d
+echo "Waiting 1 minute for Cassandra node to start"
+sleep 90
+
+echo "Executing scripts"
+sudo docker exec cassandraandredislearning-db-1 cqlsh -e "CREATE KEYSPACE library WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'datacenter1' : 1 };"
+#sudo docker exec cassandraandredislearning-db-1 cqlsh -e "CREATE TABLE library.ids (id_name varchar, next_id int, PRIMARY KEY (bookid));"
+sudo docker exec cassandraandredislearning-db-1 cqlsh -e "CREATE TABLE library.book (bookid bigint, title text, author text, PRIMARY KEY (bookid));"
+#sudo docker exec cassandraandredislearning-db-1 cqlsh -e "INSERT INTO library.ids (id_name, next_id) VALUES ('book_id', 1)"
+#sudo docker exec cassandraandredislearning-db-1 cqlsh -e "INSERT INTO library.ids (id_name, next_id) VALUES ('user_id', 1)"
