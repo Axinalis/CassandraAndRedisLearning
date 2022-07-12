@@ -5,7 +5,8 @@ import com.axinalis.noSqlDbs.dto.Client;
 import com.axinalis.noSqlDbs.entity.ClientEntity;
 import com.axinalis.noSqlDbs.repository.BookRepository;
 import com.axinalis.noSqlDbs.repository.UserRepository;
-import com.axinalis.noSqlDbs.service.UserService;
+import com.axinalis.noSqlDbs.service.ClientService;
+import com.datastax.oss.driver.api.core.uuid.Uuids;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +17,17 @@ import java.util.stream.Collectors;
 import static com.axinalis.noSqlDbs.service.DtoEntityMapper.*;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private BookRepository bookRepository;
 
-    public UserServiceImpl() {
+    public ClientServiceImpl() {
     }
 
-    public UserServiceImpl(@Autowired UserRepository userRepository, @Autowired BookRepository bookRepository) {
+    public ClientServiceImpl(@Autowired UserRepository userRepository, @Autowired BookRepository bookRepository) {
         this.userRepository = userRepository;
         this.bookRepository = bookRepository;
     }
@@ -60,12 +61,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Client createUser(Client client) {
-        ClientEntity returnedUser = userRepository.save(mapUserDtoToEntity(
+        ClientEntity clientToCreate = mapUserDtoToEntity(
                 client,
                 client.getReadBooks().stream()
                         .map(Book::getId)
-                        .collect(Collectors.toList())));
-        return mapUserEntityToDto(returnedUser, returnedUser
+                        .collect(Collectors.toList()));
+        clientToCreate.setClientId(Uuids.timeBased().timestamp());
+        ClientEntity returnedClient = userRepository.save(clientToCreate);
+        return mapUserEntityToDto(returnedClient, returnedClient
                         .getReadBooks().stream()
                         .map(bookId -> mapBookEntityToDto(bookRepository.findById(bookId).orElseThrow()))
                         .collect(Collectors.toList())
@@ -74,11 +77,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Client updateUser(long id, Client client) {
-        ClientEntity clientEntity = userRepository.save(mapUserDtoToEntity(
+        if(userRepository.findById(id).isEmpty()){
+            throw new RuntimeException("No such client");
+        }
+        ClientEntity clientEntity = mapUserDtoToEntity(
                 client,
                 client.getReadBooks().stream()
                         .map(Book::getId)
-                        .collect(Collectors.toList())));
+                        .collect(Collectors.toList()));
+        clientEntity.setClientId(id);
+        ClientEntity returnedClient = userRepository.save(clientEntity);
         return mapUserEntityToDto(
                 clientEntity,
                 clientEntity.getReadBooks().stream()
