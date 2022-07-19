@@ -33,7 +33,6 @@ public class BookController {
     @PostMapping
     public Book createBook(@RequestBody Book book){
         log.info("Creating of new book is requested. {}", book);
-        //return new Book(1L, "Sotnikau", "Vasil Bykov");
         Book book1 = bookService.createBook(book);
         log.info("Book created. {}", book1);
         return book1;

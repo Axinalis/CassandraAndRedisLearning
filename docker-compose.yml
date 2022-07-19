@@ -7,9 +7,9 @@ services:
     depends_on:
       -   db
     environment:
-      DB_USERNAME: ""
-      DB_PASSWORD: ""
-      DB_URL: "jdbc:cassandra://db:9042/library;DefaultKeyspace=library"
+      MOD_DB_PORT: "6379"
+      MOD_DB_PASSWORD: ""
+      MOD_DB_HOST: "mod-db"
       DB_KEYSPACE: "library"
       DB_IP: "db"
       DB_PORT: "9042"
@@ -17,3 +17,7 @@ services:
     image: "cassandra:latest"
     ports:
       -   "9042:9042"
+  mod-db:
+    image: "redis:latest"
+    ports:
+      -   "6379:6379"
